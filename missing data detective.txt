@@ -1,0 +1,45 @@
+"""missing data detective
+
+Usage:
+  python missing_data_detective.py path/to/dataset.csv
+  python missing_data_detective.py
+
+Finds missing values and prints:
+- total missing per column
+- % missing per column
+- columns with > threshold missing
+"""
+
+import sys
+
+from utils_eda import main_dataset_arg, read_dataset
+
+
+def main():
+    path, name = main_dataset_arg(sys.argv)
+    df = read_dataset(path)
+
+    total_cells = df.shape[0] * df.shape[1] if df.shape[0] and df.shape[1] else 0
+    total_missing = int(df.isna().sum().sum())
+
+    print(f"Dataset: {name}")
+    print(f"Total missing values: {total_missing} / {total_cells} ({(total_missing/total_cells*100) if total_cells else 0:.2f}%)")
+
+    missing_count = df.isna().sum().sort_values(ascending=False)
+    missing_pct = (missing_count / df.shape[0] * 100).round(2)
+
+    print("\nMissing values per column (count):")
+    print(missing_count)
+
+    print("\nMissing values per column (%):")
+    print(missing_pct)
+
+    threshold = 10.0
+    cols_over = missing_pct[missing_pct > threshold].index.tolist()
+    print(f"\nColumns with > {threshold}% missing ({len(cols_over)}):")
+    for c in cols_over:
+        print(f"- {c}: {missing_pct[c]}%")
+
+
+if __name__ == "__main__":
+    main()

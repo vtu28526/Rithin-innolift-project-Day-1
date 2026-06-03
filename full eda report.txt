@@ -1,0 +1,63 @@
+"""full eda report
+
+Usage:
+  python full_eda_report.py path/to/dataset.csv
+  python full_eda_report.py
+
+Creates a quick EDA report in terminal:
+- shape
+- dtypes
+- missing summary
+- numeric describe
+- correlation (numeric only)
+- optional: group comparison (uses group_compare heuristics)
+"""
+
+import sys
+
+from utils_eda import main_dataset_arg, read_dataset
+
+
+def main():
+    path, name = main_dataset_arg(sys.argv)
+    df = read_dataset(path)
+
+    print(f"\n{'='*60}\nFULL EDA REPORT\n{'='*60}")
+    print(f"Dataset: {name}")
+    print(f"Shape: {df.shape[0]} rows x {df.shape[1]} cols")
+
+    print("\nDtypes:")
+    print(df.dtypes)
+
+    print("\nMissing values (top 20):")
+    missing = df.isna().sum().sort_values(ascending=False)
+    print(missing.head(20))
+
+    numeric = df.select_dtypes(include="number")
+    if not numeric.empty:
+        print("\nNumeric describe:")
+        print(numeric.describe().T)
+
+        # correlation
+        if numeric.shape[1] >= 2:
+            try:
+                corr = numeric.corr(numeric_only=True)
+                print("\nCorrelation matrix (numeric only):")
+                print(corr)
+            except Exception as e:
+                print(f"\nCorrelation failed: {e}")
+    else:
+        print("\nNo numeric columns found for numeric describe/correlation.")
+
+    # group comparison (best effort)
+    try:
+        import group_compare
+
+        print("\n--- Group & Compare (best effort) ---")
+        group_compare.main()
+    except Exception:
+        pass
+
+
+if __name__ == "__main__":
+    main()

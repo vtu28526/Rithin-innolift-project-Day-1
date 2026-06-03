@@ -1,0 +1,71 @@
+"""group & compare
+
+Usage:
+  python group_compare.py path/to/dataset.csv
+  python group_compare.py
+
+Heuristic approach:
+- Detect a categorical-like column for grouping (object/category with low cardinality)
+- Detect numeric columns for comparison
+- Print group sizes and mean of numeric columns per group
+
+If no good group column exists, prints a message.
+"""
+
+import sys
+
+from utils_eda import main_dataset_arg, read_dataset
+
+
+def pick_group_column(df):
+    import pandas as pd
+
+    candidates = []
+    for c in df.columns:
+        dtype = df[c].dtype
+        is_groupable = (
+            pd.api.types.is_object_dtype(dtype)
+            or pd.api.types.is_string_dtype(dtype)
+            or isinstance(dtype, pd.CategoricalDtype)
+        )
+        if is_groupable:
+            nunique = df[c].nunique(dropna=True)
+            # keep smallish cardinality for readability
+            if 1 <= nunique <= 20:
+                candidates.append((nunique, c))
+
+    if not candidates:
+        return None
+
+    # prefer smallest cardinality
+    candidates.sort(key=lambda x: x[0])
+    return candidates[0][1]
+
+
+def main():
+    path, name = main_dataset_arg(sys.argv)
+    df = read_dataset(path)
+
+    group_col = pick_group_column(df)
+    if not group_col:
+        print("No suitable group/categorical column found (object/category with <= 20 unique values).")
+        return
+
+    # numeric columns
+    numeric_cols = df.select_dtypes(include="number").columns.tolist()
+    if not numeric_cols:
+        print("No numeric columns found for comparison.")
+        return
+
+    print(f"Dataset: {name}")
+    print(f"Using group column: {group_col}")
+    print("\nGroup sizes:")
+    print(df[group_col].value_counts(dropna=False))
+
+    print("\nNumeric comparison (group means):")
+    means = df.groupby(group_col)[numeric_cols].mean(numeric_only=True)
+    print(means)
+
+
+if __name__ == "__main__":
+    main()

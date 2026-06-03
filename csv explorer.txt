@@ -1,0 +1,37 @@
+"""csv explorer
+
+Usage:
+  python csv_explorer.py path/to/dataset.csv
+  python csv_explorer.py path/to/dataset.xlsx
+
+Prints a quick exploration summary:
+- head
+- columns
+- missing value counts
+"""
+
+import sys
+
+from utils_eda import main_dataset_arg, read_dataset
+
+
+def main():
+    path, name = main_dataset_arg(sys.argv)
+    df = read_dataset(path)
+
+    print(f"Dataset: {name}")
+    print(f"Rows: {df.shape[0]}, Cols: {df.shape[1]}")
+    print("\nColumns:")
+    for c in df.columns:
+        print(f"- {c}")
+
+    print("\nHead (5 rows):")
+    print(df.head(5))
+
+    print("\nMissing values per column:")
+    missing = df.isna().sum().sort_values(ascending=False)
+    print(missing)
+
+
+if __name__ == "__main__":
+    main()
