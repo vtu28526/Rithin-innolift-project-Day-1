@@ -1,0 +1,15 @@
+current_year = 2026
+
+try:
+    birth_year = int(input("Enter your birth year: "))
+
+    if birth_year > current_year:
+        print("Error: Birth year cannot be greater than 2026.")
+    else:
+        age = current_year - birth_year
+        age_in_10_years = age + 10
+
+        print(f"Your age is {age}.")
+        print(f"Your age in 10 years will be {age_in_10_years}.")
+except ValueError:
+    print("Error: Please enter a valid year.")
