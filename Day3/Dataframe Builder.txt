@@ -1,0 +1,41 @@
+"""Dataframe Builder
+
+Usage:
+  python dataframe_builder.py path/to/dataset.csv
+  python dataframe_builder.py
+
+Builds a pandas DataFrame from the given CSV/XLSX and prints:
+- shape
+- column types
+- first few rows
+"""
+
+import sys
+
+from utils_eda import main_dataset_arg, read_dataset
+
+
+def main():
+    path, name = main_dataset_arg(sys.argv)
+    df = read_dataset(path)
+
+    print(f"Dataset: {name}")
+    print(f"Shape: {df.shape[0]} rows x {df.shape[1]} cols")
+    print("\nDtypes:")
+    print(df.dtypes)
+    print("\nHead (5 rows):")
+    print(df.head(5))
+
+    # quick numeric conversion summary
+    try:
+        import pandas as pd
+
+        num_df = df.apply(pd.to_numeric, errors="ignore")
+        print("\nNumeric columns (detected):")
+        print(list(num_df.select_dtypes(include="number").columns))
+    except Exception:
+        pass
+
+
+if __name__ == "__main__":
+    main()
