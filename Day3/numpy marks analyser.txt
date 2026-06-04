@@ -1,0 +1,88 @@
+"""numpy marks analyser
+
+Usage:
+  python numpy_marks_analyser.py path/to/dataset.csv
+  python numpy_marks_analyser.py
+
+This script:
+- Loads the dataset using pandas (via utils_eda.py)
+- Attempts to find columns containing marks/scores (heuristic)
+- Runs quick numpy-based statistics
+"""
+
+import sys
+import numpy as np
+
+from utils_eda import main_dataset_arg, read_dataset
+
+
+def find_marks_columns(df):
+    cols = list(df.columns)
+    lowered = {c: str(c).lower() for c in cols}
+
+    keywords = ["mark", "marks", "score", "grade", "result", "percentage", "percent"]
+    candidates = [c for c in cols if any(k in lowered[c] for k in keywords)]
+
+    # If no candidate, fallback to numeric columns
+    if not candidates:
+        try:
+            import pandas as pd
+
+            num_cols = list(df.select_dtypes(include="number").columns)
+            return num_cols
+        except Exception:
+            return []
+
+    return candidates
+
+
+def numpy_stats(values):
+    arr = np.asarray(values, dtype=float)
+    arr = arr[~np.isnan(arr)]
+    if arr.size == 0:
+        return None
+    return {
+        "count": int(arr.size),
+        "mean": float(arr.mean()),
+        "median": float(np.median(arr)),
+        "min": float(arr.min()),
+        "max": float(arr.max()),
+        "std": float(arr.std(ddof=0)),
+    }
+
+
+def main():
+    path, name = main_dataset_arg(sys.argv)
+    df = read_dataset(path)
+
+    marks_cols = find_marks_columns(df)
+    if not marks_cols:
+        print("No numeric/marks-like columns found to analyze.")
+        return
+
+    print(f"Dataset: {name}")
+    print(f"Detected marks-like columns: {marks_cols}")
+
+    for c in marks_cols:
+        s = df[c]
+        # Convert to numeric where possible
+        try:
+            import pandas as pd
+
+            numeric = pd.to_numeric(s, errors="coerce").to_numpy()
+        except Exception:
+            numeric = np.asarray(s, dtype=float)
+
+        stats = numpy_stats(numeric)
+        if stats is None:
+            print(f"\nColumn: {c}")
+            print("  No valid numeric values found.")
+            continue
+
+        print(f"\nColumn: {c}")
+        for k, v in stats.items():
+            print(f"  {k}: {v}")
+
+
+if __name__ == "__main__":
+    main()
