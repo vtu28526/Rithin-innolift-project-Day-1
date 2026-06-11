@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Student Registration System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark">SR</span>
+                <span>
+                    <strong>Innolift College</strong>
+                    <small>Student Portal</small>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a class="{{ 'active' if active_page == 'home' else '' }}" href="{{ url_for('home') }}">Home</a>
+                <a class="{{ 'active' if active_page == 'register' else '' }}" href="{{ url_for('register') }}">Register</a>
+                <a class="{{ 'active' if active_page == 'students' else '' }}" href="{{ url_for('students') }}">Students</a>
+                <a class="{{ 'active' if active_page == 'about' else '' }}" href="{{ url_for('about') }}">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-title">
+            <p class="eyebrow">About Project</p>
+            <h1>Built for Day 1 Flask practice</h1>
+            <p>The project focuses on frontend layout, template rendering, navigation, and clean page design.</p>
+        </section>
+
+        <section class="about-layout">
+            <article class="info-block">
+                <h2>Project Overview</h2>
+                <p>
+                    The Student Registration System is a Flask application that presents a home page,
+                    a student registration form, a records page with dummy data, and an about page.
+                    It is prepared for later database integration.
+                </p>
+            </article>
+            <article class="info-block">
+                <h2>Features</h2>
+                <ul class="feature-list">
+                    <li>Flask routes using render_template()</li>
+                    <li>Responsive navigation across all pages</li>
+                    <li>Professional registration form interface</li>
+                    <li>Styled table with 10 dummy student records</li>
+                    <li>Reusable color theme, cards, buttons, and footer</li>
+                </ul>
+            </article>
+            <article class="info-block">
+                <h2>Team Information</h2>
+                <p>
+                    Developed by the Student Registration System team as part of the Innolift Day 1
+                    web development task using Flask, HTML, and CSS.
+                </p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Innolift College. Student Registration System.</p>
+    </footer>
+</body>
+</html>

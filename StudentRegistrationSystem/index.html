@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Student Registration System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark">SR</span>
+                <span>
+                    <strong>Innolift College</strong>
+                    <small>Student Portal</small>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a class="{{ 'active' if active_page == 'home' else '' }}" href="{{ url_for('home') }}">Home</a>
+                <a class="{{ 'active' if active_page == 'register' else '' }}" href="{{ url_for('register') }}">Register</a>
+                <a class="{{ 'active' if active_page == 'students' else '' }}" href="{{ url_for('students') }}">Students</a>
+                <a class="{{ 'active' if active_page == 'about' else '' }}" href="{{ url_for('about') }}">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">Innolift College</p>
+                <h1>Student Registration System</h1>
+                <p>
+                    A clean Flask web application for collecting student details,
+                    viewing sample records, and presenting the project structure.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="{{ url_for('register') }}">Register Student</a>
+                    <a class="btn secondary" href="{{ url_for('students') }}">View Records</a>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <span class="panel-label">Day 1 Build</span>
+                <h2>Frontend + Flask Routing</h2>
+                <p>HTML templates, CSS styling, responsive navigation, and render_template routes are ready for demonstration.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <p class="eyebrow">Welcome</p>
+                <h2>Professional student data entry interface</h2>
+            </div>
+            <div class="card-grid">
+                <article class="card">
+                    <h3>Simple Navigation</h3>
+                    <p>Move between Home, Registration, Students, and About pages using connected Flask routes.</p>
+                </article>
+                <article class="card">
+                    <h3>Clean Forms</h3>
+                    <p>The registration page includes every required field for a complete student profile.</p>
+                </article>
+                <article class="card">
+                    <h3>Dummy Records</h3>
+                    <p>The students page displays 10 sample entries passed from Flask into an HTML table.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Innolift College. Student Registration System.</p>
+    </footer>
+</body>
+</html>
+

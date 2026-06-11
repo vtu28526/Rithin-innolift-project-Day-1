@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Student Registration System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark">SR</span>
+                <span>
+                    <strong>Innolift College</strong>
+                    <small>Student Portal</small>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a class="{{ 'active' if active_page == 'home' else '' }}" href="{{ url_for('home') }}">Home</a>
+                <a class="{{ 'active' if active_page == 'register' else '' }}" href="{{ url_for('register') }}">Register</a>
+                <a class="{{ 'active' if active_page == 'students' else '' }}" href="{{ url_for('students') }}">Students</a>
+                <a class="{{ 'active' if active_page == 'about' else '' }}" href="{{ url_for('about') }}">About</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-title">
+            <p class="eyebrow">Student Registration</p>
+            <h1>Enter student details</h1>
+            <p>No database is connected today. This form is built for frontend structure and route demonstration.</p>
+        </section>
+
+        <section class="form-card">
+            <form action="{{ url_for('register') }}" method="post" class="registration-form">
+                <div class="form-group">
+                    <label for="student_name">Student Name</label>
+                    <input type="text" id="student_name" name="student_name" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="roll_number">Roll Number</label>
+                    <input type="text" id="roll_number" name="roll_number" placeholder="Example: 101" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select department</option>
+                        <option>CSE</option>
+                        <option>IT</option>
+                        <option>ECE</option>
+                        <option>MECH</option>
+                        <option>CIVIL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select year</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="student@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select gender</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group full">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="4" placeholder="Enter complete address" required></textarea>
+                </div>
+                <div class="form-actions full">
+                    <button class="btn primary" type="submit">Submit Registration</button>
+                    <button class="btn secondary" type="reset">Clear Form</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Innolift College. Student Registration System.</p>
+    </footer>
+</body>
+</html>
