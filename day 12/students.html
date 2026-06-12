@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main navigation">
+            <div class="brand">
+                <div class="brand-mark">S</div>
+                <div>
+                    <strong>Student</strong>
+                    <small>Registration System</small>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="{{ 'active' if active_page=='home' else '' }}">Home</a>
+                <a href="{{ url_for('register') }}" class="{{ 'active' if active_page=='register' else '' }}">Register</a>
+                <a href="{{ url_for('students') }}" class="{{ 'active' if active_page=='students' else '' }}">Students</a>
+                <a href="{{ url_for('about') }}" class="{{ 'active' if active_page=='about' else '' }}">About</a>
+            </div>
+        </nav>
+    </header>
+    <main class="page">
+        <div class="page-title">
+            <h1>Registered Students</h1>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="messages" role="status" aria-live="polite">
+                    {% for category, message in messages %}
+                        <p class="message {{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <section class="table-card" style="margin-top: 20px;">
+            <div class="table-header">
+                <div>
+                    <h2 style="margin:0; color: var(--navy);">Student List</h2>
+                    <p style="margin:0; color: var(--muted);">Total: {{ students|length }}</p>
+                </div>
+            </div>
+            {% if students and students|length > 0 %}
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Roll Number</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Gender</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in students %}
+                                <tr>
+                                    <td>{{ s.roll_number }}</td>
+                                    <td>{{ s.student_name }}</td>
+                                    <td>{{ s.department }}</td>
+                                    <td>{{ s.year }}</td>
+                                    <td>{{ s.email }}</td>
+                                    <td>{{ s.phone }}</td>
+                                    <td>{{ s.gender }}</td>
+                                    <td>{{ s.address }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h2>No students found</h2>
+                    <p>Register a student to see them here.</p>
+                    <a class="btn primary" href="{{ url_for('register') }}">Register Now</a>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+    <footer class="footer">
+        <p>© Student Registration System</p>
+    </footer>
+</body>
+</html>
