@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/predict">Predict</a></li>
+      <li><a href="/predictions">Predictions</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Project Overview</h2>
+      <p>Disease Outbreak Risk Predictor is a Flask mini project that estimates county outbreak risk from public health, demographic, housing, transportation, and social vulnerability indicators.</p>
+    </div>
+
+    <div class="card">
+      <h2>Dataset Information</h2>
+      <ul class="feature-list">
+        <li>Total county records: {{ summary.total_records }}</li>
+        <li>States covered: {{ summary.states }}</li>
+        <li>Average population density: {{ summary.avg_density }}</li>
+        <li>Average vaccination rate: {{ summary.avg_vaccinated }}%</li>
+        <li>Average social vulnerability rank: {{ summary.avg_social_vulnerability }}</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Features</h2>
+      <ul class="feature-list">
+        <li>County-level outbreak risk form</li>
+        <li>CSV-based percentile risk scoring</li>
+        <li>SQLite prediction history</li>
+        <li>Responsive web pages</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>Copyright 2026 Disease Outbreak Risk Predictor</p>
+  </footer>
+</body>
+</html>
+

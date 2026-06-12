@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Outbreak Prediction Records</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/predict">Predict</a></li>
+      <li><a href="/predictions">Predictions</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Saved Outbreak Predictions</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>State</th>
+          <th>County</th>
+          <th>Density</th>
+          <th>Vaccinated</th>
+          <th>SVI</th>
+          <th>Risk</th>
+          <th>Prediction</th>
+        </tr>
+
+        {% if predictions and predictions|length > 0 %}
+          {% for row in predictions %}
+            <tr>
+              <td>{{ row.state }}</td>
+              <td>{{ row.county }}</td>
+              <td>{{ row.population_density }}</td>
+              <td>{{ row.percent_vaccinated }}%</td>
+              <td>{{ row.social_vulnerability }}</td>
+              <td>{{ row.risk_level }} ({{ row.risk_score }}%)</td>
+              <td>{{ row.prediction }}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" class="empty-state">No outbreak predictions saved yet.</td>
+          </tr>
+        {% endif %}
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+

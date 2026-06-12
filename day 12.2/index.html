@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Disease Outbreak Risk Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/predict">Predict</a></li>
+      <li><a href="/predictions">Predictions</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>Disease Outbreak Risk Predictor</h1>
+    <h2>County-level public health risk analysis</h2>
+    <p>Estimate outbreak risk using population density, vaccination coverage, health vulnerability, poverty, age, disability, housing, and transportation indicators.</p>
+    <a class="button-link" href="/predict">Start Prediction</a>
+  </div>
+
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span>Dataset Records</span>
+        <strong>{{ summary.total_records }}</strong>
+      </div>
+      <div class="stat-card">
+        <span>States Covered</span>
+        <strong>{{ summary.states }}</strong>
+      </div>
+      <div class="stat-card">
+        <span>Avg Density</span>
+        <strong>{{ summary.avg_density }}</strong>
+      </div>
+      <div class="stat-card">
+        <span>Avg Vaccinated</span>
+        <strong>{{ summary.avg_vaccinated }}%</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Project Description</h2>
+      <p>This project uses county health and social vulnerability data to estimate disease outbreak risk and store prediction records in SQLite.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>Disease Outbreak Risk Predictor</p>
+  </footer>
+</body>
+</html>
+
+index.html
